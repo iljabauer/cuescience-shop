@@ -1,7 +1,7 @@
 from natspec_utils.stringutils import stringToUnicode as u;
 
 from django.test.testcases import TestCase
-from cuescience_cart.tests.support.test_support import TestSupport
+from cuescience_cart.test.support.test_support import TestSupport
 
 
 
@@ -12,7 +12,7 @@ class RemoveOneItemTest(TestCase):
 
     def test(self):
         """
-         The code in this method is generated from: /de.iljabauer.projects.natspec.python/cuescience_cart/tests/remove_one_item_test.natspec
+         The code in this method is generated from: /de.iljabauer.projects.natspec.python/cuescience_cart/test/remove_one_item_test.natspec
          Never change this method or any contents of this file, all local changes will we overwritten.
         """
         # Create product cuescience Scoreboard for 299.00

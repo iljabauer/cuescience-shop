@@ -1,6 +1,6 @@
 """ @Imports """
 from django.test.testcases import TestCase
-from cuescience_cart.tests.support.test_support import TestSupport
+from cuescience_cart.test.support.test_support import TestSupport
 
 
 
