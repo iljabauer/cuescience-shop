@@ -1,0 +1,5 @@
+Django==1.6.2
+Jinja2==2.7.2
+MarkupSafe==0.19
+django-cart==1.0.1
+wsgiref==0.1.2

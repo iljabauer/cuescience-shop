@@ -1,0 +1,6 @@
+.project
+.pydevproject
+db.sqlite3
+venv
+.DS_Store
+.idea
