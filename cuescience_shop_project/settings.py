@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cuescience_shop',
+    'cuescience_cart',
     'cart',
 )
 
