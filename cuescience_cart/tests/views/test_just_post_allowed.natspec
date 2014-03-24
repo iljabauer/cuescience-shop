@@ -3,3 +3,6 @@ Assert status code: 405
 
 Send get to /cart/remove/1/
 Assert status code: 405
+
+Send get to /cart/update/
+Assert status code: 405

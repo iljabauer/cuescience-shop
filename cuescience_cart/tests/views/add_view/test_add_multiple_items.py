@@ -24,6 +24,9 @@ class TestAddMultipleItems(TestCase):
         # Add cuescience Scoreboard to cart
         response_cuescience_Scoreboard = self.test_support.add_to_cart([u("cuescience"), u("Scoreboard")])
         
+        # Assert status code: 302
+        self.test_support.assert_status_code(302, response_cuescience_Scoreboard)
+        
         # Add cuescience LiveCam to cart
         response_cuescience_LiveCam = self.test_support.add_to_cart([u("cuescience"), u("LiveCam")])
         

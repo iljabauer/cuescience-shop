@@ -1,19 +1,25 @@
 from decimal import Decimal
 from django.test import TestCase
 from natspec_utils.decorators import TextSyntax
-from cuescience_shop.models import Product
-from django.test.client import Client
+from cuescience_shop.models import Product, Client, Order
+from django.test.client import Client as TestClient
 from cart.cart import Cart
 
 
-class UpdateRequest(object):
+class Request(object):
     def __init__(self):
         self.data = {}
+        
+class UpdateRequest(Request):
+    pass
+
+class CheckoutRequest(Request):
+    pass
 
 class TestSupport(object):
     def __init__(self, test_case):
         self.test_case = test_case
-        self.client = Client()
+        self.client = TestClient()
 
     @TextSyntax("Create product #1 for #2", types=["list<str>", "float"])
     def create_product(self, title_words, price):
@@ -30,6 +36,37 @@ class TestSupport(object):
     @TextSyntax("Add product #1 to cart", types=["int", ], return_type="Response")
     def add_product_to_cart(self, product_id):
         response = self.client.post("/cart/add/%s/" % product_id)
+        return response
+    
+    @TextSyntax("Select cart", return_type="Cart")
+    def select_cart(self):
+        return Cart(self.client).cart
+    
+    @TextSyntax("Checkout cart", return_type="Response")
+    def checkout_cart(self):
+        response = self.client.get("/cart/checkout/")
+        return response
+    
+    @TextSyntax("Enter data:", return_type="CheckoutRequest")
+    def submit_data(self):
+        request = CheckoutRequest()
+        return request
+    
+    
+    @TextSyntax("- current step: #1", types=["int", "CheckoutRequest"], return_type="CurrentStep")
+    def current_step_data(self, step, request):
+        request.data.update({"checkout_wizard-current_step": step})
+        return step
+        
+    @TextSyntax("- #1: #2", types=["list<str>", "list<str>", "CheckoutRequest", "CurrentStep"])
+    def collect_checkout_data(self, key_words, value_words, request, step):
+        key = "_".join(key_words)
+        value = " ".join(value_words)
+        request.data.update({"%s-%s"%(step,key): value})
+        
+    @TextSyntax("Submit", types=["CheckoutRequest"], return_type="Response")
+    def submit(self, request):
+        response = self.client.post("/cart/checkout/", request.data)
         return response
     
     @TextSyntax("Remove #1 from cart", types=["list<str>", ], return_type="Response")
@@ -66,6 +103,13 @@ class TestSupport(object):
     @TextSyntax("Assert status code: #1", types=["int", "Response"])
     def assert_status_code(self, status_code, response):
         self.test_case.assertEqual(response.status_code, status_code)
+        
+    @TextSyntax("Assert step #1 of wizard is displayed", types=["int", "Response"])
+    def assert_step_of_wizard(self, step_number, response):
+        wizard = response.context['wizard']
+        current_step = wizard['steps'].current
+        self.test_case.assertEqual(current_step, '%s'%step_number, msg="Current step should be step %s, but was %s!"%(step_number, current_step))
+        
 
     @TextSyntax("Assert total cart item count: #1", types=["int", "Response"])
     def assert_total_item_count(self, total_count, response):
@@ -98,6 +142,35 @@ class TestSupport(object):
         cart = Cart(self.client)
         for item in cart:
             self.test_case.assertFalse(product == item.product, msg="The %s product should not be in cart!" % title)
+            
+    @TextSyntax("Select client: #1, #2", types=["list<str>","list<str>"], return_type="Client")
+    def select_client(self, first_name_words, last_name_words):
+        first_name = " ".join(first_name_words)
+        last_name = " ".join(last_name_words)
+        client = Client.objects.get(first_name=first_name, last_name=last_name)
+        return client
+    
+    @TextSyntax("Assert client has #5 address: #1, #2, #3, #4", types=["list<str>", "list<str>", "str", "list<str>", "str", "Client"])
+    def assert_client_shipping_address(self, street_words, number_words, postcode, city_words, address_type, client):
+        street = " ".join(street_words)
+        number = " ".join(number_words)
+        city = " ".join(city_words)
+        
+        address = getattr(client,"%s_address"%address_type)
+        self.test_case.assertEqual(street, address.street)
+        self.test_case.assertEqual(number, address.number)
+        self.test_case.assertEqual(postcode, address.postcode)
+        self.test_case.assertEqual(city, address.city)
+        
+    @TextSyntax("Assert order with cart exists", types=["Cart"], return_type="Order")
+    def assert_order_with_cart_exists(self, cart):
+        order = Order.objects.get(cart=cart)
+        return order
+    
+    @TextSyntax("Assert order has abovementioned client", types=["Order", "Client"])
+    def assert_order_has_client(self, order, client):
+        self.test_case.assertEqual(client, order.client)
+        
         
         
         

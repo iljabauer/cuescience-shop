@@ -27,4 +27,10 @@ class TestJustPostAllowed(TestCase):
         # Assert status code: 405
         self.test_support.assert_status_code(405, response__cart_remove_1_)
         
+        # Send get to /cart/update/
+        response__cart_update_ = self.test_support.send_get_to_url(u("/cart/update/"))
+        
+        # Assert status code: 405
+        self.test_support.assert_status_code(405, response__cart_update_)
+        
         
