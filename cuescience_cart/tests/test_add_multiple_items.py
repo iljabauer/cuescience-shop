@@ -1,18 +1,18 @@
 from natspec_utils.stringutils import stringToUnicode as u;
 
 from django.test.testcases import TestCase
-from cuescience_cart.test.support.test_support import TestSupport
+from cuescience_cart.tests.support.support import TestSupport
 
 
 
 
-class AddMultipleItemsTest(TestCase):
+class TestAddMultipleItems(TestCase):
     def setUp(self):
         self.test_support = TestSupport(self)
 
     def test(self):
         """
-         The code in this method is generated from: /de.iljabauer.projects.natspec.python/cuescience_cart/test/add_multiple_items_test.natspec
+         The code in this method is generated from: /de.iljabauer.projects.natspec.python/cuescience_cart/tests/test_add_multiple_items.natspec
          Never change this method or any contents of this file, all local changes will we overwritten.
         """
         # Create product cuescience Scoreboard for 299.00

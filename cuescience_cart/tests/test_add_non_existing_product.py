@@ -1,17 +1,17 @@
 """ @Imports """
 from django.test.testcases import TestCase
-from cuescience_cart.test.support.test_support import TestSupport
+from cuescience_cart.tests.support.support import TestSupport
 
 
 
 
-class AddNonExistingProduct(TestCase):
+class TestAddNonExistingProduct(TestCase):
     def setUp(self):
         self.test_support = TestSupport(self)
 
     def test(self):
         """
-         The code in this method is generated from: /de.iljabauer.projects.natspec.python/cuescience_cart/test/add_non_existing_product.natspec
+         The code in this method is generated from: /de.iljabauer.projects.natspec.python/cuescience_cart/tests/test_add_non_existing_product.natspec
          Never change this method or any contents of this file, all local changes will we overwritten.
         """
         # Add product 1 to cart
