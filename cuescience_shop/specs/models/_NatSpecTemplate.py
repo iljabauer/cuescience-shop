@@ -29,7 +29,9 @@ if __name__ == '__main__':
     template_admin = env.get_template("admin_template.py")
     content_admin = template_admin.render(admins=model.admin_support.admins)
     
-    f = open("../../%s.py" % helper.convert(model.__class__.__name__), 'w')
+    print model.admin_support.admins
+    
+    f = open("../../%s_abstract.py" % helper.convert(model.__class__.__name__), 'w')
     f.write(content)
     f.close()
     f1 = open("../../admin.py", 'w')

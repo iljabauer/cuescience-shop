@@ -14,6 +14,7 @@ class ModelSupport:
     
     @TextSyntax("Every #1 has:", types=["list<str>", ], return_type="Model")
     def model_name_definition(self, model_name_words):
+        #TODO: handle list of words for name in camelcase
         verbose_name = " ".join(model_name_words)
         model_name = "".join(model_name_words)
         model = Model(model_name, verbose_name)

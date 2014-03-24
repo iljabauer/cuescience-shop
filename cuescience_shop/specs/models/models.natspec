@@ -12,16 +12,16 @@ Every Order has:
 	The client wich has ordered.
 	- one cart.Cart.
 	The cart contains the ordered products, quantities and total price
-	- a paypal transaction id.
+	//- one exclusive Payment called payment.
 	
 Configure admin to:
 	- display: order number, client.
 	- show filter for: client.
-
 	
 Every Client has:
 	- a client number:
 		max length: 6
+	- an email.
 	- a first name.
 	- a last name.
 	- one exclusive Address called billing address.
