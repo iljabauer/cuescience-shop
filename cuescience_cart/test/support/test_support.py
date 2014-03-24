@@ -21,7 +21,11 @@ class TestSupport(object):
     def add_to_cart(self, title_words):
         title = " ".join(title_words)
         product = Product.objects.get(title=title)
-        response = self.client.post("/cart/add/%s/" % product.id)
+        self.add_product_to_cart(product.id)
+    
+    @TextSyntax("Add product #1 to cart", types=["int", ], return_type="Response")
+    def add_product_to_cart(self, product_id):
+        response = self.client.post("/cart/add/%s/" % product_id)
         return response
     
     @TextSyntax("Remove #1 from cart", types=["list<str>", ], return_type="Response")

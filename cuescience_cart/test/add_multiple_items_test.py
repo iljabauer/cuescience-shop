@@ -22,24 +22,9 @@ class AddMultipleItemsTest(TestCase):
         self.test_support.create_product([u("cuescience"), u("LiveCam")], 150.0)
         
         # Add cuescience Scoreboard to cart
-        response_cuescience_Scoreboard = self.test_support.add_to_cart([u("cuescience"), u("Scoreboard")])
+        self.test_support.add_to_cart([u("cuescience"), u("Scoreboard")])
         
         # Add cuescience LiveCam to cart
-        response_cuescience_LiveCam = self.test_support.add_to_cart([u("cuescience"), u("LiveCam")])
-        
-        # Assert status code: 302
-        self.test_support.assert_status_code(302, response_cuescience_LiveCam)
-        
-        # Assert total cart item count: 2
-        self.test_support.assert_total_item_count(2, response_cuescience_LiveCam)
-        
-        # Assert total cart price: 449.00
-        self.test_support.assert_total_cart_price(449.0, response_cuescience_LiveCam)
-        
-        # Assert 1 cuescience Scoreboard in cart for 299.00
-        __1_cuescience_Scoreboard_299_00 = self.test_support.assert_specific_item_in_cart(1, [u("cuescience"), u("Scoreboard")], 299.0, response_cuescience_LiveCam)
-        
-        # Assert 1 cuescience LiveCam in cart for 150.00
-        __1_cuescience_LiveCam_150_00 = self.test_support.assert_specific_item_in_cart(1, [u("cuescience"), u("LiveCam")], 150.0, response_cuescience_LiveCam)
+        self.test_support.add_to_cart([u("cuescience"), u("LiveCam")])
         
         
