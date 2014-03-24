@@ -1,12 +1,12 @@
 from cart import Cart
 from cuescience_shop.models import Product
-from django.http import Http404
+from django.http import Http404, HttpResponseNotAllowed
 from django.shortcuts import redirect
 
 
 def add_view(request, product_id, next="/"):
     if request.method != "POST":
-        return
+        return HttpResponseNotAllowed(["POST"])
 
     cart = Cart(request)
     try:
@@ -21,7 +21,7 @@ def add_view(request, product_id, next="/"):
 
 def remove_view(request, product_id, next="/"):
     if request.method != "POST":
-        return
+        return HttpResponseNotAllowed(["POST"])
 
     cart = Cart(request)
     try:

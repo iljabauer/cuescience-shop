@@ -21,7 +21,7 @@ class TestSupport(object):
     def add_to_cart(self, title_words):
         title = " ".join(title_words)
         product = Product.objects.get(title=title)
-        self.add_product_to_cart(product.id)
+        return self.add_product_to_cart(product.id)
     
     @TextSyntax("Add product #1 to cart", types=["int", ], return_type="Response")
     def add_product_to_cart(self, product_id):
@@ -32,7 +32,16 @@ class TestSupport(object):
     def remove_from_cart(self, title_words):
         title = " ".join(title_words)
         product = Product.objects.get(title=title)
-        response = self.client.post("/cart/remove/%s/" % product.id)
+        return self.remove_product_from_cart(product.id)
+    
+    @TextSyntax("Remove product #1 from cart", types=["int", ], return_type="Response")
+    def remove_product_from_cart(self, product_id):
+        response = self.client.post("/cart/remove/%s/" % product_id)
+        return response
+    
+    @TextSyntax("Send get to #1", types=["str", ], return_type="Response")
+    def send_get_to_url(self, url):
+        response = self.client.get(url)
         return response
 
     @TextSyntax("Assert status code: #1", types=["int", "Response"])
