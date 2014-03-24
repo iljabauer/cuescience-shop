@@ -4,6 +4,6 @@ python:
 install:
   - pip install -r requirements.txt
   - pip install coveralls
-script: coverage run --source='.' manage.py test
+script: coverage run --source='.' --omit='*test_support.py,*_NatSpecTemplate.py,django_lean_modelling/*,natspec_utils/*,*specs/*' manage.py test
 after_success:
   - coveralls
