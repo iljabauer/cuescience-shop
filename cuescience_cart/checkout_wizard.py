@@ -7,7 +7,7 @@ class Step1Form(forms.ModelForm):
     
     class Meta:
         model = Client
-        fields = ('first_name','last_name',) 
+        fields = ('first_name', 'last_name',) 
     
     def __init__(self, *args, **kwargs):
         super(Step1Form, self).__init__(*args, **kwargs)
@@ -21,18 +21,18 @@ class Step1Form(forms.ModelForm):
 
 
 class Step2Form(forms.ModelForm):
-    different_billing_address = forms.BooleanField(required=False, label="Different billing address?", )
+    different_billing_address = forms.BooleanField(required=False, label="Different billing address?",)
     
     class Meta:
         model = Address
-        fields = ('street','number','postcode','city',) 
+        fields = ('street', 'number', 'postcode', 'city',) 
     
     def __init__(self, *args, **kwargs):
         super(Step2Form, self).__init__(*args, **kwargs)
         self.heading = "Shipping Address"
         self.grouped_fields = [
-            (self['street'],self['number'],),
-            (self['postcode'],self['city'],),
+            (self['street'], self['number'],),
+            (self['postcode'], self['city'],),
             (self['different_billing_address'],),
             
         ]
@@ -43,14 +43,14 @@ class Step3Form(forms.ModelForm):
     
     class Meta:
         model = Address
-        fields = ('street','number','postcode','city',) 
+        fields = ('street', 'number', 'postcode', 'city',) 
     
     def __init__(self, *args, **kwargs):
         super(Step3Form, self).__init__(*args, **kwargs)
         self.heading = "Billing Address"
         self.grouped_fields = [
-            (self['street'],self['number'],),
-            (self['postcode'],self['city'],),
+            (self['street'], self['number'],),
+            (self['postcode'], self['city'],),
             
         ]
 
@@ -77,5 +77,5 @@ class Step4Form(forms.Form):
 
 
 class CheckoutWizardBase(SessionWizardView):
-    form_list = [("1",Step1Form),("2",Step2Form),("3",Step3Form),("4",Step4Form),]
+    form_list = [("1", Step1Form), ("2", Step2Form), ("3", Step3Form), ("4", Step4Form), ]
     condition_dict = { "3": condition_step_3, }

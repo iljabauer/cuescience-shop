@@ -10,9 +10,11 @@ def index_view(request):
     return render_to_response("cuescience_cart/index.html", RequestContext(request))
 
 
-def add_view(request, product_id, next="/"):
+def add_view(request, product_id):
     if request.method != "POST":
         return HttpResponseNotAllowed(["POST"])
+
+    next = request.GET.get("next", "/")
 
     cart = Cart(request)
     try:
@@ -25,9 +27,11 @@ def add_view(request, product_id, next="/"):
     return redirect(next)
 
 
-def remove_view(request, product_id, next="/"):
+def remove_view(request, product_id):
     if request.method != "POST":
         return HttpResponseNotAllowed(["POST"])
+
+    next = request.GET.get("next", "/")
 
     cart = Cart(request)
     try:
@@ -40,17 +44,22 @@ def remove_view(request, product_id, next="/"):
     return redirect(next)
 
 
-def update_view(request, next="/"):
+def update_view(request):
     if request.method != "POST":
         return HttpResponseNotAllowed(["POST"])
 
+    next = request.GET.get("next", "/")
+
     cart = Cart(request)
     for item in cart:
-        quantity = request.POST.get("quantity-%s" % item.id, None)
+        quantity = request.POST.get("quantity-{0}".format(item.product.pk), None)
         isNone = quantity is None
+        
+        if isNone:
+            continue
         isSame = int(quantity) == item.quantity
-        if isNone or isSame:
-            return redirect(next)
+        if isSame:
+            continue
 
         quantity = int(quantity)
         if quantity == 0:

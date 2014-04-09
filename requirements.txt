@@ -2,4 +2,4 @@ Django==1.6.2
 Jinja2==2.7.2
 MarkupSafe==0.19
 wsgiref==0.1.2
--e git://github.com/vgaicuks/django-cart.git#egg=django-cart
+-e git://github.com/iljabauer/django-cart#egg=django-cart

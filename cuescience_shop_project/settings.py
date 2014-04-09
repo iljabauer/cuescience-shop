@@ -59,7 +59,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
-    "cuescience_cart.processors.cart_processor"
+    "cuescience_cart.processors.cart_processor",
+    'django.core.context_processors.request',
 )
 
 ROOT_URLCONF = 'cuescience_shop_project.urls'
