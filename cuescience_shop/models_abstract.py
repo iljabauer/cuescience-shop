@@ -8,16 +8,19 @@ class ProductBase(models.Model):
     :param title: The title of the product
     :param price: The price without tax. The maximum value is 9999,99
     """
+
     class Meta:
         abstract = True
         verbose_name = _("Product")
         verbose_name_plural = _("Products")
+
     title = models.CharField(max_length=128, )
     price = models.DecimalField(max_digits=6, decimal_places=2, )
-     
-	
+
+
     def __unicode__(self):
-        return u"%s"%self.title
+        return u"%s" % self.title
+
 
 class OrderBase(models.Model):
     """
@@ -26,18 +29,21 @@ class OrderBase(models.Model):
     :param cart: The cart contains the ordered products, quantities and total price
     :param paypal_transaction_id
     """
+
     class Meta:
         abstract = True
         verbose_name = _("Order")
         verbose_name_plural = _("Orders")
+
     order_number = models.CharField(max_length=128, )
     client = models.ForeignKey('Client', related_name='client', )
     cart = models.ForeignKey('cart.Cart', related_name='cart', )
     paypal_transaction_id = models.CharField(max_length=128, )
-     
-	
+
+
     def __unicode__(self):
-        return u"%s"%self.order_number
+        return u"%s" % self.order_number
+
 
 class ClientBase(models.Model):
     """
@@ -47,19 +53,22 @@ class ClientBase(models.Model):
     :param billing_address
     :param shipping_address
     """
+
     class Meta:
         abstract = True
         verbose_name = _("Client")
         verbose_name_plural = _("Clients")
+
     client_number = models.CharField(max_length=6, )
     first_name = models.CharField(max_length=128, )
     last_name = models.CharField(max_length=128, )
     billing_address = models.OneToOneField('Address', related_name='billing_address_of', )
     shipping_address = models.OneToOneField('Address', related_name='shipping_address_of', )
-     
-	
+
+
     def __unicode__(self):
-        return u"%s"%self.client_number
+        return u"%s" % self.client_number
+
 
 class AddressBase(models.Model):
     """
@@ -68,15 +77,17 @@ class AddressBase(models.Model):
     :param postcode: The German postcode, maybe not suitable for other countries.
     :param city
     """
+
     class Meta:
         abstract = True
         verbose_name = _("Address")
         verbose_name_plural = _("Addresses")
+
     street = models.CharField(max_length=128, )
     number = models.CharField(max_length=5, )
     postcode = models.CharField(max_length=5, )
     city = models.CharField(max_length=128, )
-     
-	
+
+
     def __unicode__(self):
-        return u"%s"%self.street
+        return u"%s" % self.street
